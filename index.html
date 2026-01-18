@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IDPS Log Monitor</title>
+    <style>
+        /* General reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Theme colors */
+        :root {
+            --background-light: #f5f5f5;
+            --background-dark: #1e1e2f;
+            --text-light: #ffffff;
+            --text-dark: #333333;
+            --accent: #4a90e2;
+            --navbar-dark: #2a2a40;
+            --navbar-light: #e0e0e0;
+            --box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
+        }
+
+        /* Body styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--background-light);
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+        }
+
+        /* Dark mode styling */
+        body.dark-mode {
+            background-color: var(--background-dark);
+            color: var(--text-light);
+        }
+
+        /* Navbar styling */
+        #navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background-color: var(--navbar-light);
+            transition: background 0.3s ease;
+            box-shadow: var(--box-shadow);
+        }
+
+        #navbar.dark-mode {
+            background-color: var(--navbar-dark);
+        }
+
+        /* Navbar links */
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-link {
+            font-size: 18px;
+            text-decoration: none;
+            color: inherit;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background 0.2s ease;
+        }
+
+        .nav-link:hover {
+            background-color: var(--accent);
+            color: var(--text-light);
+        }
+
+        /* Theme toggle button */
+        #theme-toggle {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: var(--accent);
+            color: var(--text-light);
+            border: none;
+            border-radius: 5px;
+            transition: background 0.2s ease;
+        }
+
+        #theme-toggle:hover {
+            background-color: #357ABD;
+        }
+
+        /* Main content styling */
+        #main-content {
+            padding: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        #main-content h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Filter and search bar */
+        .filter-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+
+        .search-box {
+            flex: 1;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 40px 10px 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .search-box .search-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            color: #aaa;
+        }
+
+        .filter-dropdown {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            background: #fff;
+        }
+
+        /* Log container */
+        #log-container {
+            background-color: rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            padding: 20px;
+            max-height: 500px;
+            height: 300px;
+            overflow-y: auto;
+            font-family: monospace;
+            line-height: 1.5;
+            transition: background 0.3s ease;
+            box-shadow: var(--box-shadow);
+        }
+
+        #log-container.dark-mode {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Log box */
+        .log-box {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: var(--background-dark);
+            color: var(--text-light);
+            border-left: 4px solid var(--accent);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .log-box.error { border-left-color: #e74c3c; }
+        .log-box.warn { border-left-color: #f1c40f; }
+        .log-box.info { border-left-color: #4a90e2; }
+
+        /* Icon styling */
+        .log-icon {
+            font-size: 20px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar with navigation links and theme toggle -->
+    <div id="navbar">
+        <div class="nav-links">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/error_logs" class="nav-link">Error Logs</a>
+        </div>
+        <button id="theme-toggle">Night Mode</button>
+    </div>
+
+    <!-- Main content area -->
+    <div id="main-content">
+        <h1>Log Monitor Dashboard</h1>
+        
+        <!-- Filter and search bar -->
+        <div class="filter-bar">
+            <div class="search-box">
+                <input type="text" placeholder="Search logs...">
+                <span class="search-icon">&#128269;</span>
+            </div>
+            <select class="filter-dropdown">
+                <option value="all">All</option>
+                <option value="info">Info</option>
+                <option value="warn">Warning</option>
+                <option value="error">Error</option>
+            </select>
+        </div>
+        
+        <!-- Log container -->
+        <div id="log-container">
+            <!-- Logs will be displayed here -->
+        </div>
+    </div>
+
+    <script>
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            document.getElementById('navbar').classList.toggle('dark-mode');
+            themeToggle.innerText = themeToggle.innerText === 'Night Mode' ? 'Day Mode' : 'Night Mode';
+        });
+
+        // Fetch logs periodically
+        function fetchLogs() {
+            fetch('/logs')
+                .then(response => response.json())
+                .then(data => {
+                    const logContainer = document.getElementById('log-container');
+                    logContainer.innerHTML = ''; // Clear previous logs
+                    
+                    // Display Suricata logs
+                    data.suricata.forEach(log => {
+                        const logBox = document.createElement('div');
+                        logBox.className = 'log-box info'; // Default to info
+                        logBox.textContent = log;
+                        logContainer.appendChild(logBox);
+                    });
+
+                    // Update last updated time
+                    const lastUpdated = new Date().toLocaleString();
+                    document.getElementById('last-updated').textContent = lastUpdated;
+                });
+        }
+
+        // Fetch logs every 10 seconds
+        setInterval(fetchLogs, 10000);
+        fetchLogs(); // Initial fetch
+    </script>
+</body>
+</html>
