@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error Log Monitor</title>
+    <style>
+        /* Same CSS styles as index.html, adjust as necessary */
+        /* You can reuse the same styles for consistency */
+    </style>
+</head>
+<body>
+    <div id="navbar">
+        <div class="nav-links">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/error_logs" class="nav-link">Error Logs</a>
+        </div>
+        <button id="theme-toggle">Night Mode</button>
+    </div>
+
+    <div id="main-content">
+        <h1>Error Log Dashboard</h1>
+        
+        <!-- Log container for error logs -->
+        <div id="log-container">
+            <!-- Logs will be displayed here -->
+        </div>
+    </div>
+
+    <script>
+        // Function to fetch error logs from the server
+        async function fetchErrorLogs() {
+            const response = await fetch('/error_logs');
+            const data = await response.json();
+            const logContainer = document.getElementById('log-container');
+            logContainer.innerHTML = ''; // Clear previous logs
+
+            // Add error logs to the container
+            data.error.forEach(log => {
+                const logBox = document.createElement('div');
+                logBox.className = 'log-box error'; // Class based on log type
+                logBox.textContent = log;
+                logContainer.appendChild(logBox);
+            });
+        }
+
+        // Fetch error logs every 10 seconds
+        setInterval(fetchErrorLogs, 10000);
+        fetchErrorLogs(); // Initial fetch
+    </script>
+</body>
+</html>
