@@ -9,6 +9,7 @@ The project was built as part of an undergraduate academic mini project and focu
 -----------------------
 
 *1.1 System Requirements*
+---
 
   Operating System
 
@@ -29,6 +30,7 @@ The project was built as part of an undergraduate academic mini project and focu
   A modern web browser
 
 *1.2 Installing Suricata*
+--
 
 Install Suricata on the Ubuntu/Kali Linux endpoint. 
 
@@ -40,7 +42,8 @@ We tested this process with version 6.0.8 and it can take some time:
 
 #sudo apt-get install suricata -y
 
-*1.3 Download and extract the Emerging Threats Suricata ruleset*
+*1.3 Suricata Configuration*
+--
 
 #cd /tmp/ && curl -LO https://rules.emergingthreats.net/open/suricata-6.0.8/emerging.rules.tar.gz
 
@@ -48,10 +51,10 @@ We tested this process with version 6.0.8 and it can take some time:
 
 #sudo chmod 640 /etc/suricata/rules/*.rules
 
-*1.4 Modify Suricata settings in the*
-*/etc/suricata/suricata.yaml file and set the following variables*
+*1.4 Configure Suricata settings in the /etc/suricata/suricata.yaml file and set the following variables*
+--
 
-#HOME_NET: "<UBUNTU_IP>"
+#HOME_NET: "<SYSTEM_IP>"
 
 #EXTERNAL_NET: "any"
 
@@ -81,22 +84,26 @@ af-packet:
 -----------------------------------
 
 *2.1 Installing Flask*
+--
 
 #pip install flask
 
 *2.2 Create the project folder*
+--
 
 #mkdir idps_web_app
 
 #cd idps_web_app
 
 *2.3 Create app.py*
+--
 
 #nano app.py 
      
   *paste the flask code*
     
 *2.4 Run the web application*
+--
 
 #python3 app.py
 
@@ -111,16 +118,19 @@ Now open the browser and go to http://127.0.0.1:5000. You will see your web Dash
 Inside the idps_web_app we will create a new directory named *templates*.
 
 *3.1 Create templates directory*
+--
 
 #mkdir templates
 
 *3.2 Create index.html*
+--
   
 #nano index.html
 
   *paste the index.html code*
 
 *3.3 Create errorlog.html*
+--
 
 #nano errorlog.html
 
