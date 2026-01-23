@@ -51,8 +51,10 @@ We tested this process with version 6.0.8 and it can take some time:
 
 #sudo chmod 640 /etc/suricata/rules/*.rules
 
-*1.4 Configure Suricata settings in the /etc/suricata/suricata.yaml file and set the following variables*
+*1.4 Configure (edit) Suricata settings in the /etc/suricata/suricata.yaml file and set the following variables*
 --
+go to #nano /etc/suricata/suricata.yaml
+ then find these specific lines and edit as instructed
 
 #HOME_NET: "<SYSTEM_IP>"
 
