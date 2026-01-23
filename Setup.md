@@ -53,35 +53,55 @@ We tested this process with version 6.0.8 and it can take some time:
 
 *1.4 Configure (edit) Suricata settings in the /etc/suricata/suricata.yaml file and set the following variables*
 --
-go to #nano /etc/suricata/suricata.yaml
- then find these specific lines and edit as instructed
+  **Step 1: Open the Suricata Configuration File**
+  #sudo nano /etc/suricata/suricata.yaml
 
-#HOME_NET: "<SYSTEM_IP>"
+ **Step 2: Configure HOME_NET and EXTERNAL_NET**
+  
+  Find these lines (they are usually commented out):
+  
+  #HOME_NET: "<SYSTEM_IP>"
+  
+  #EXTERNAL_NET: "any"
 
-#EXTERNAL_NET: "any"
+  Edit them to look like this: 
+  
+  HOME_NET: "[192.168.1.0/24]"
+  
+  EXTERNAL_NET: "any"
 
-default-rule-path: /etc/suricata/rules
+  **Step 3: Verify the Default Rule Path**
+  Find this line:
+  
+  #default-rule-path: /etc/suricata/rules
 
-rule-files:
+  **Step 4: Configure Rule Files**
+  Find the rule-files section and configure so that every files which ends with .rules consider as rules
 
-- "*.rules"
+  rule-files:
+  - "*.rules"
 
-Global stats configuration
+  **Step 5: Enable Global Statistics**
+    Find the stats section.
+    
+  stats:
+  
+   enabled: yes (default would be "no", enable it.)
 
-stats:
-enabled: Yes
+   
+  **Step 6: Enable High-Speed Packet Capture (AF-PACKET)**
+    Find the af-packet section and configure its interface as your actual network interface.
 
-Linux high speed capture support
-
-af-packet:
-
+  af-packet:
   - interface: eth0
 
-*1.5Restart the Suricata service:*
+ **Step 7: Save and Exit nano**
+ 
+  Press CTRL + O → Enter (save)
+  
+  Press CTRL + X (exit)    
 
-#sudo systemctl restart suricata
-
-
+    
 *2. Web Application Setup (Flask)*
 -----------------------------------
 
