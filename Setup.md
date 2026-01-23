@@ -64,7 +64,7 @@ We tested this process with version 6.0.8 and it can take some time:
   
   #EXTERNAL_NET: "any"
 
-  Edit them to look like this: 
+  Edit them with your system's IP: 
   
   HOME_NET: "[192.168.1.0/24]"
   
