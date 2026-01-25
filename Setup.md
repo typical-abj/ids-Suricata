@@ -59,6 +59,7 @@ We can see its active but exited. Now lets stop the suricata and continue the co
 --
 
 Step 1: Open the Suricata Configuration File
+
   #sudo nano /etc/suricata/suricata.yaml
 
 Step 2: Under the adress-groups find the HOME_NET and EXTERNAL_NET
@@ -89,12 +90,12 @@ Step 7: Save and Exit nano
 *2.1 Installing Flask*
 --
 
-#pip install flask
+  #pip install flask
 
 *2.2 Create the project folder*
 --
 
-#mkdir idps_web_app
+  #mkdir idps_web_app
 
 #cd idps_web_app
 
@@ -108,7 +109,7 @@ Step 7: Save and Exit nano
 *2.4 Run the web application*
 --
 
-#python3 app.py
+  #python3 app.py
 
 if the setup is correct, you will see *Running on http://127.0.0.1:5000/*
 
@@ -123,19 +124,21 @@ Inside the idps_web_app we will create a new directory named *templates*.
 *3.1 Create templates directory*
 --
 
-#mkdir templates
+  #mkdir templates
+  
+  #cd templates
 
 *3.2 Create index.html*
 --
   
-#nano index.html
+  #nano index.html
 
   *paste the index.html code*
 
 *3.3 Create errorlog.html*
 --
 
-#nano errorlog.html
+  #nano errorlog.html
 
   *paste the error.html code*
 
@@ -150,7 +153,7 @@ Now host the web application and you are good to go!!!!
 
 1. Start Suricata:
 
-  #sudo suricata -c /etc/suricata/suricata.yaml -i <network-interface>
+    #sudo suricata -c /etc/suricata/suricata.yaml -i <network-interface>
 
 
 2. Access the Web Application:
